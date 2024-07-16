@@ -5,7 +5,7 @@ import sys
 import re
 
 
-def parse_line(log: dict) -> None:
+def output(log: dict) -> None:
     """ Parses a line from stdin """
     print("File size: {}".format(log["file_size"]))
     for code in sorted(log["code_frequency"]):
@@ -41,8 +41,8 @@ if __name__ == "__main__":
                     log["code_frequency"][code] += 1
 
                 if (line_count % 10 == 0):
-                    parse_line(log)
+                    output(log)
 
     finally:
-        parse_line(log)
+        output(log)
 
