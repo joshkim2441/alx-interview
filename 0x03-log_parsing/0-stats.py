@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3
 """ Reads stdin line by line and computes metrics """
 import sys
 import re
