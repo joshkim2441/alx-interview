@@ -6,7 +6,7 @@ import re
 
 
 def output(log: dict) -> None:
-    """ Parses a line from stdin """
+    """ A helper function that dispalays stats """
     print("File size: {}".format(log["file_size"]))
     for code in sorted(log["code_frequency"]):
         if log["code_frequency"][code]:
@@ -42,6 +42,5 @@ if __name__ == "__main__":
 
                 if (line_count % 10 == 0):
                     output(log)
-
     finally:
         output(log)
