@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-""" Reads stdin line by line and computes metrics """
+"""
+log parsing
+"""
 
 import sys
 import re
 
 
 def output(log: dict) -> None:
-    """ A helper function that dispalays stats """
+    """
+    helper function to display stats
+    """
     print("File size: {}".format(log["file_size"]))
     for code in sorted(log["code_frequency"]):
         if log["code_frequency"][code]:
@@ -15,7 +19,7 @@ def output(log: dict) -> None:
 
 if __name__ == "__main__":
     regex = re.compile(
-    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8)
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8
 
     line_count = 0
     log = {}
@@ -36,7 +40,7 @@ if __name__ == "__main__":
                 # File size
                 log["file_size"] += file_size
 
-                # Status code
+                # status code
                 if (code.isdecimal()):
                     log["code_frequency"][code] += 1
 
