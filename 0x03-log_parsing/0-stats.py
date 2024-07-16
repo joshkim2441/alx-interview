@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Reads stdin line by line and computes metrics """
+
 import sys
 import re
 
@@ -14,7 +15,8 @@ def parse_line(log: dict) -> None:
 
 if __name__ == "__main__":
     regex = re.compile(
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8)
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8)
+
     line_count = 0
     log = {}
     log["file_size"] = 0
