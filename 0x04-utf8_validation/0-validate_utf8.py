@@ -30,7 +30,8 @@ def validUTF8(data):
                 continue
 
         # At this point, byte is a multi-byte char
-            if num_bytes == 1 or num_bytes > 4:  # UTF-8 can be 1 to 4 bytes long
+            if num_bytes == 1 or num_bytes > 4:
+                """ UTF-8 can be 1 to 4 bytes long """
                 return False
         else:
             if not (data[i] & (1 << 7) and not (data[i] & (1 << 6))):
