@@ -5,43 +5,35 @@ from itertools import takewhile
 
 def int_to_bytes(nums):
     """ Helper function that converts ints to bits """
-    for num in nums:
-        bytes = []
-        mask = 1 << 8
-        while mask:
-            mask >>= 1
-            bytes.append(bool(num & mask))
-        yield bytes
+    bytes = 0
+    mask = 1 << 7
+    while mask & nums:
+        bytes += 1
+        mask = mask >> 1
+    return bytes
 
 
 def validUTF8(data):
     """ Initialize a variable to keep track of the
     number of bytes expected.
     """
-    num_bytes = int_to_bytes(data)
+    num_bytes = 0
 
     """ Iterate through each integer in the data """
-    for byte in num_bytes:
+    for i in range(len(data)):
         """ Check if the most significant bit (MSB)
          is 0 (single-byte character) """
         # If single byte char, then valid..
-        if byte[0] == 0:
-            continue
+        if num_bytes == 0:
+            num_bytes = int_to_bytes(data[i])
+            if num_bytes == 0:
+                continue
 
         # At this point, byte is a multi-byte char
-        units = sum(takewhile(bool, byte))
-        if units <= 1:  # UTF-8 can be 1 to 4 bytes long
-            return False
-        if units >= 4:
-            return False
-
-        for _ in range(units - 1):
-            """ Check if the next byte starts with 10
-            (continuation byte). """
-            try:
-                byte = next(num_bytes)
-            except StopIteration:
+            if num_bytes == 1 or num_bytes > 4:  # UTF-8 can be 1 to 4 bytes long
                 return False
-            if byte[0] != 1 or byte[1] != 0:
+        else:
+            if not (data[i] & (1 << 7) and not (data[i] & (1 << 6))):
                 return False
-    return True
+        num_bytes -= 1
+    return num_bytes == 0
