@@ -18,6 +18,7 @@ def is_safe(board, i, row, col):
     """Checks if the position is safe for the queen"""
     return board[i] in (col, col - i + row, i - row + col)
 
+
 def solve_n_queens(board, row, N):
     """Solves the N-Queens problem"""
     if row == N:
@@ -39,6 +40,7 @@ def chess_board(size):
     """Creates a chess board"""
     board = [0 * size for r in range(size)]
     return board
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
