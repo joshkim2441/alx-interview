@@ -9,8 +9,8 @@ const names = [];
 
 const requestCharacters = async () => {
   await new Promise(resolve => request(filmUrl, (error, response, body) => {
-    if (error || response.StatusCode !== 200) {
-      console.error('Error: ', error, '| StatusCode: ', response.statusCode);
+    if (err || response.StatusCode !== 200) {
+      console.error('Error: ', err, '| StatusCode: ', response.statusCode);
     } else {
       const filmData = JSON.parse(body);
       people = filmData.characters;
@@ -22,7 +22,7 @@ const requestCharacters = async () => {
 const requestNames = async () => {
   if (people.length > 0) {
     for (const p of people) {
-      await new Promise(resolve => request(p, (error, response, body) => {
+      await new Promise(resolve => request(p, (err, response, body) => {
         if (error || response.statusCode !== 200) {
           console.error('Error: ', '| StatusCode: ', response.statusCode);
         } else {
