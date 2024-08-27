@@ -3,7 +3,10 @@
 const request = require('request');
 
 const movieId = process.argv[2];
-const filmUrl = 'https://swapi-api.hbtn.io/api/films/' + movieId;
+const filmUrl = {
+  url: 'https://swapi-api.hbtn.io/api/films/' + movieId,
+  method: 'GET'
+};
 let people = [];
 const names = [];
 
