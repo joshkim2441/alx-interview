@@ -2,42 +2,49 @@
 """Prime Game"""
 
 
+
+
 def isWinner(x, nums):
     """Prime Game"""
     def sieve(n):
-        """Sieve of Eratosthenes"""
-        is_prime = [True] * (n + 1)
-        p = 2
-        while (p * p <= n):
-            if is_prime[p]:
-                for i in range(p * p, n + 1, p):
-                    is_prime[i] = False
-            p += 1
-        return [p for p in range(2, n + 1) if is_prime[p]]
+        for i in range(2, int(n ** 0.5) + 1):
+            if not n % i:
+                return False
+        return True
+
+
+    def calculate_primes(n, primes):
+        """ Calculate all primes """
+        top_prime = primes[-1]
+        if n > top_prime:
+            for i in range(top_prime + 1, n + 1):
+                if sieve(i):
+                    primes.append(i)
+                else:
+                    primes.append(0)
 
     def play_game(n):
-        """Simulate the game and return the winner"""
-        primes = sieve(n)
-        moves = 0
-        while primes:
-            prime = primes[0]
-            primes = [p for p in primes if p % prime != 0]
-            moves += 1
-        return "Maria" if moves % 2 != 0 else "Ben"
+        players_wins = {"Maria": 0, "Ben": 0}
 
-    maria_wins = 0
-    ben_wins = 0
+        primes = [0, 0, 2]
 
-    for n in nums:
-        winner = play_game(n)
-        if winner == "Maria":
-            maria_wins += 1
-        else:
-            ben_wins += 1
+        calculate_primes(max(nums), primes)
 
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
-        return "None"
+        for round in range(x):
+            sum_options = sum((i != 0 and i <= nums[round])
+                              for i in primes[:nums[round] + 1])
+
+            if (sum_options % 2):
+                winner = "Maria"
+            else:
+                winner = "Ben"
+
+            if winner:
+                players_wins[winner] += 1
+
+        if players_wins["Maria"] > players_wins["Ben"]:
+            return "Maria"
+        elif players_wins["Ben"] > players_wins["Maria"]:
+            return "Ben"
+
+        return None
